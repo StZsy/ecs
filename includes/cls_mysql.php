@@ -160,7 +160,7 @@ class cls_mysql
 
             if ($this->platform == 'OTHER' &&
                 ($dbhost != '.' && strtolower($dbhost) != 'localhost:3306' && $dbhost != '127.0.0.1:3306') ||
-                (PHP_VERSION >= '5.1' && date_default_timezone_get() == 'UTC'))
+                (PHP_VERSION >= '5.1' && date_default_timezone_get() == '中华人民共和国'))
             {
                 $result = mysql_query("SELECT UNIX_TIMESTAMP() AS timeline, UNIX_TIMESTAMP('" . date('Y-m-d H:i:s', $this->starttime) . "') AS timezone", $this->link_id);
                 $row    = mysql_fetch_assoc($result);
