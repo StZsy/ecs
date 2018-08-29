@@ -1789,7 +1789,7 @@ elseif ($_REQUEST['step'] == 'done')
     {
         $order['shipping_name']=trim(stripcslashes($order['shipping_name']));
     }
-
+    
     /* 订单信息 */
     $smarty->assign('order',      $order);
     $smarty->assign('total',      $total);
