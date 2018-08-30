@@ -139,6 +139,7 @@ function check_money($log_id, $money)
  */
 function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
 {
+    var_dump($log_id);exit;
     /* 取得支付编号 */
     $log_id = intval($log_id);
     if ($log_id > 0)
