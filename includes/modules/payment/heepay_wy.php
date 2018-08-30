@@ -118,7 +118,7 @@ class heepay_wy
         $bankName="银联";
         $bankCardType="SAVING";//SAVING : 储蓄卡支付CREDIT : 信用卡支付
 
-        $sign_key="";//签名密钥，换商户号同时需要更换密钥
+        $sign_key=$payment['key'];//签名密钥，换商户号同时需要更换密钥
         $sign_str = '';
             $sign_str  = $sign_str . 'merchantId=' . $merchantId;
             $sign_str  = $sign_str . '&merchantOrderNo=' . $merchantOrderNo;
@@ -128,7 +128,6 @@ class heepay_wy
             $sign_str  = $sign_str . '&productCode=' . $productCode;
             $sign_str  = $sign_str . '&version=' . $version;
             $sign_str = $sign_str . '&key=' . $sign_key;
-            var_dump($sign_str);exit;
         $signString = strtolower(md5($sign_str));
 
 
