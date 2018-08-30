@@ -116,6 +116,7 @@ class PaymentModel extends BaseModel {
      * @return  void
      */
     function order_paid($log_id, $pay_status = PS_PAYED, $note = '') {
+        dd($log_id);
         /* 取得支付编号 */
         $log_id = intval($log_id);
         if ($log_id > 0) {
