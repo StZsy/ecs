@@ -87,7 +87,7 @@ class heepay_wy
         {
             $charset = EC_CHARSET;
         }
-
+var_dump($order);
         $url="https://c.heepay.com/quick/pc/index.do";
         $merchantId=$payment['agent_id'];	//商户号	汇付宝提供给商户的ID
         $merchantOrderNo=$order['order_sn'];	//商户交易号	商户内部的交易ID	
