@@ -96,7 +96,7 @@ class heepay_wy
         $payAmount=$order['order_amount'];	//交易金额	单位为元，两位小数
         $requestTime=date('YmdHis', time());	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
         $version="1.0";	//版本号	商户请求版本号	
-        $notifyUrl="http://$_SERVER[HTTP_HOST]/ecs/flow.php?step=done";	//通知URL	
+        $notifyUrl="http://www.e7chong.com/mall/";	//通知URL	
         $callBackUrl="http://www.e7chong.com/mall/";	//同步返回URL	本次交易同步返回URL	
 
         $description="goods_info";	//商品信息	本次交易商品信息	
