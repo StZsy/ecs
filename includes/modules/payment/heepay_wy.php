@@ -113,12 +113,9 @@ class heepay_wy
         {
             $clientIp = $_SERVER['REMOTE_ADDR'];
         }
-        // $onlineType="simple";
-        // $bankId="708";
-        // $bankName="银联";
         $onlineType="hard";
-        $bankId="708";
-        $bankName="银联";
+        $bankId="";
+        $bankName="";
         $bankCardType="SAVING";//SAVING : 储蓄卡支付CREDIT : 信用卡支付
 
         $sign_key=$payment['key'];//签名密钥，换商户号同时需要更换密钥
@@ -169,6 +166,7 @@ class heepay_wy
             }
         }
         $payment  = get_payment($_GET['code']);
+        var_dump($_GET);exit;
         $seller_email = rawurldecode($_GET['seller_email']);
         $order_sn = str_replace($_GET['subject'], '', $_GET['out_trade_no']);
         $order_sn = trim(addslashes($order_sn));
