@@ -149,7 +149,7 @@ class heepay_wy
         <input type='hidden' name='bankName' value='$bankName' />
         <input type='hidden' name='bankCardType' value='$bankCardType' />
         </form><div style=\"text-align:center\"><input type=\"button\" onclick=\"document.frmSubmit.submit();\" value=\"".$GLOBALS["_LANG"]["pay_button"]."\" /></div>";
-        order_paid($order['order_id'], 2);
+
         return $button;
     }
 
@@ -176,6 +176,7 @@ class heepay_wy
             'merchantId' => $_GET['merchantId'],
             'merchantOrderNo' => $_GET['merchantOrderNo'],
             'payAmount' => $_GET['payAmount'],
+            'result' => $_GET['result'],
             'successAmount' => $_GET['successAmount'],
             'transNo' => $_GET['transNo'],
             'version' => $_GET['version']
@@ -188,7 +189,7 @@ class heepay_wy
         }
 
         $sign = $sign.'key='.$payment['key'];
-        if (strtolower(md5($sign)) != $_GET['sign'])
+        if (md5($sign) != $_GET['sign'])
         {
             return false;
         }
