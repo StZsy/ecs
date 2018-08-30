@@ -35,7 +35,7 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['author']  = 'ST_YUAN';
 
     /* 网址 */
-    $modules[$i]['website'] = 'http://www.heepay.com';
+    $modules[$i]['website'] = 'http://mch.heepay.com';
 
     /* 版本号 */
     $modules[$i]['version'] = '1.0';
@@ -96,11 +96,11 @@ class heepay_wy
         $payAmount=$order['order_amount'];	//交易金额	单位为元，两位小数
         $requestTime=date('YmdHis', time());	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
         $version="1.0";	//版本号	商户请求版本号	
-        $notifyUrl="http://www.e7chong.com/mall/";	//通知URL	
+        $notifyUrl="https://internal.heepay.com/notifyok.do";	//通知URL	
         $callBackUrl="http://www.e7chong.com/mall/";	//同步返回URL	本次交易同步返回URL	
 
-        $description="goods_info";	//商品信息	本次交易商品信息	
-        $clientIp="192.168.8.103";	//用户ip	发起交易用户的ip	
+        $description="趣讯";	//商品信息	本次交易商品信息	
+        $clientIp="127.0.0.1";	//用户ip	发起交易用户的ip	
 
         if(isset($_SERVER['HTTP_CLIENT_IP']))
         {
