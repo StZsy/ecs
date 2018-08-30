@@ -166,17 +166,23 @@ class heepay_wy
             }
         }
         $payment  = get_payment($_GET['code']);
-        var_dump($_GET);exit;
-        $seller_email = rawurldecode($_GET['seller_email']);
-        $order_sn = str_replace($_GET['subject'], '', $_GET['out_trade_no']);
-        $order_sn = trim(addslashes($order_sn));
+        
+        //支付失败
+        if (!isset($_GET['result']) || 1002 == $_GET['result']) {
+            return false;
+        }
 
-        /* 检查数字签名是否正确 */
-        ksort($_GET);
-        reset($_GET);
+        $signParam = [
+            'merchantId' => $_GET['merchantId'],
+            'merchantOrderNo' => $_GET['merchantOrderNo'],
+            'payAmount' => $_GET['payAmount'],
+            'successAmount' => $_GET['successAmount'],
+            'transNo' => $_GET['transNo'],
+            'version' => $_GET['version']
+        ];
 
         $sign = '';
-        foreach ($_GET AS $key=>$val)
+        foreach ($signParam AS $key=>$val)
         {
             if ($key != 'sign' && $key != 'sign_type' && $key != 'code')
             {
@@ -184,44 +190,22 @@ class heepay_wy
             }
         }
 
-        $sign = substr($sign, 0, -1) . $payment['alipay_key'];
-        //$sign = substr($sign, 0, -1) . ALIPAY_AUTH;
+        $sign = $sign.'key='.$payment['key'];
         if (md5($sign) != $_GET['sign'])
         {
             return false;
         }
 
         /* 检查支付的金额是否相符 */
-        if (!check_money($order_sn, $_GET['total_fee']))
+        if (!check_money($signParam['payAmount'], $signParam['successAmount']))
         {
             return false;
         }
 
-        if ($_GET['trade_status'] == 'WAIT_SELLER_SEND_GOODS')
-        {
-            /* 改变订单状态 */
-            order_paid($order_sn, 2);
-
-            return true;
-        }
-        elseif ($_GET['trade_status'] == 'TRADE_FINISHED')
-        {
-            /* 改变订单状态 */
-            order_paid($order_sn);
-
-            return true;
-        }
-        elseif ($_GET['trade_status'] == 'TRADE_SUCCESS')
-        {
-            /* 改变订单状态 */
-            order_paid($order_sn, 2);
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        //finish order
+        order_paid($signParam['merchantOrderNo']);
+        echo 'ok';
+        return true;
     }
 }
 
