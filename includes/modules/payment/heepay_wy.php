@@ -129,7 +129,7 @@ class heepay_wy
             $sign_str  = $sign_str . '&productCode=' . $productCode;
             $sign_str  = $sign_str . '&version=' . $version;
             $sign_str = $sign_str . '&key=' . $sign_key;
-        $signString = md5($sign_str);
+        $signString = strtolower(md5($sign_str));
 
 
         $button = "<form id='frmSubmit' method='post' name='frmSubmit' action=$url  target=\"_bland\">
