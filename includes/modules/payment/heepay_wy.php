@@ -38,7 +38,7 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['website'] = 'http://www.heepay.com';
 
     /* 版本号 */
-    $modules[$i]['version'] = '3';
+    $modules[$i]['version'] = '1.0';
 
     /* 配置信息 */
     $modules[$i]['config']  = array(
@@ -88,46 +88,71 @@ class heepay_wy
             $charset = EC_CHARSET;
         }
 
-        list($msec, $sec) = explode(' ', microtime());
-        $msectime =  (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
+        $url="https://c.heepay.com/quick/pc/index.do";
+        $merchantId=$payment['agent_id'];	//商户号	汇付宝提供给商户的ID
+        $merchantOrderNo=date('YmdHis', $order['add_time']);	//商户交易号	商户内部的交易ID	
+        $merchantUserId=$order['user_id'];	//用户号	商户内部的个人用户ID 商户自定义	
+        $productCode="HY_B2CEBANKPC";	//产品编码	用户签约的产品编码: 银联为HY_B2CEBANKPC
+        $payAmount=$order['order_amount'];	//交易金额	单位为元，两位小数
+        $requestTime=date('YmdHis', time());	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
+        $version="1.0";	//版本号	商户请求版本号	
+        $notifyUrl="http://";	//通知URL	
+        $callBackUrl="http://";	//同步返回URL	本次交易同步返回URL	
 
-        $signs = array(
-            'version' => 3,
-            'agent_id' => intval($payment['agent_id']),
-            'agent_bill_id' => $order['order_sn'],
-            'agent_bill_time' => date('YmdHis', $order['add_time']),
-            'pay_type' => 20,
-            'pay_amt' => $order['order_amount'],
-            'notify_url' => 'http://www.baidu.com',
-            'return_url' => 'http://www.souhu.com',
-            'user_ip' => implode('_', explode('.' , $_SERVER["REMOTE_ADDR"])),
-            'bank_card_type' => -1,
-        );
-        $parameter = array(
-            'goods_name' => 'null1',
-            'goods_note' => 'null2',
-            'goods_num' => '',
-            'remark' => '',
-        );
+        $description="goods_info";	//商品信息	本次交易商品信息	
+        $clientIp="192.168.8.103";	//用户ip	发起交易用户的ip	
 
-        $param = '';
-        $sign  = '';
-
-        foreach ($signs AS $key => $val)
+        if(isset($_SERVER['HTTP_CLIENT_IP']))
         {
-            $param .= "$key=". iconv("utf-8","gb2312//IGNORE",$val)."&";
-            $sign  .= "$key=". iconv("utf-8","gb2312//IGNORE",$val)."&";
+            $clientIp = $_SERVER['HTTP_CLIENT_IP'];
         }
-        foreach ($parameter AS $key => $val)
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
         {
-            $param .= "$key=". iconv("utf-8","gb2312//IGNORE",$val)."&";
+            $clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }else
+        {
+            $clientIp = $_SERVER['REMOTE_ADDR'];
         }
+        $onlineType="simple";
+        $bankId="708";
+        $bankName="银联";
+        $bankCardType="SAVING";//SAVING : 储蓄卡支付CREDIT : 信用卡支付
 
-        $param = substr($param, 0, -1);
-        $sign  .= 'key='.$payment['key'];
-        
-        $url = 'https://pay.heepay.com/Payment/Index.aspx?'.$param.'&sign='.strtolower(md5($sign));
-        $button = '<div style="text-align:center"><input type="button" onclick="window.open(\''.$url.'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+
+        $sign_key="";//签名密钥，换商户号同时需要更换密钥
+        $sign_str = '';
+            $sign_str  = $sign_str . 'merchantId=' . $merchantId;
+            $sign_str  = $sign_str . '&merchantOrderNo=' . $merchantOrderNo;
+            $sign_str  = $sign_str . '&merchantUserId=' . $merchantUserId;
+            $sign_str  = $sign_str . '&notifyUrl=' . $notifyUrl;
+            $sign_str  = $sign_str . '&payAmount=' . $payAmount;
+            $sign_str  = $sign_str . '&productCode=' . $productCode;
+            $sign_str  = $sign_str . '&version=' . $version;
+            $sign_str = $sign_str . '&key=' . $sign_key;
+        $signString = md5($sign_str);
+
+
+        $button = "<form id='frmSubmit' method='post' name='frmSubmit' action=<?php echo $url;?>>
+        <input type='hidden' name='merchantId' value='<?php echo $merchantId;?>' />
+        <input type='hidden' name='merchantOrderNo' value='<?php echo $merchantOrderNo;?>' />
+        <input type='hidden' name='merchantUserId' value='<?php echo $merchantUserId;?>' />
+        <input type='hidden' name='productCode' value='<?php echo $productCode;?>' />
+        <input type='hidden' name='payAmount' value='<?php echo $payAmount;?>' />
+        <input type='hidden' name='requestTime' value='<?php echo $requestTime;?>' />
+        <input type='hidden' name='version' value='<?php echo $version;?>' />
+        <input type='hidden' name='notifyUrl' value='<?php echo $notifyUrl;?>' />
+        <input type='hidden' name='callBackUrl' value='<?php echo $callBackUrl;?>' />
+        <input type='hidden' name='description' value='<?php echo $description;?>' />
+        <input type='hidden' name='clientIp' value='<?php echo $clientIp;?>' />
+        <input type='hidden' name='signString' value='<?php echo $signString;?>' />
+        <input type='hidden' name='onlineType' value='<?php echo $onlineType;?>' />
+        <input type='hidden' name='bankId' value='<?php echo $bankId;?>' />
+        <input type='hidden' name='bankName' value='<?php echo $bankName;?>' />
+        <input type='hidden' name='bankCardType' value='<?php echo $bankCardType;?>' />
+        </form><div style=\"text-align:center\"><input type=\"button\" onclick=\"document.frmSubmit.submit();\" value=\"$GLOBALS[_LANG][pay_button]\" /></div>";
+
+        // $url = 'https://pay.heepay.com/Payment/Index.aspx?'.$param.'&sign='.strtolower(md5($sign));
+        // $button = '<div style="text-align:center"><input type="button" onclick="window.open(\''.$url.'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
     }

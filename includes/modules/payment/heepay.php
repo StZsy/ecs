@@ -164,6 +164,8 @@ class heepay
 
         $aes = new aes();
 
+
+        $url = 'https://Pay.Heepay.com/ShortPay/SubmitOrder.aspx?agent_id='.$payment['agent_id'].'&encrypt_data=????'.'&sign='.md5($sign);
         $button = '<div style="text-align:center"><input type="button" onclick="window.open(\'https://mapi.alipay.com/gateway.do?'.$param. '&sign='.md5($sign).'&sign_type=MD5\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
