@@ -5,7 +5,7 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 
-$payment_lang = ROOT_PATH . 'languages/' .$GLOBALS['_CFG']['lang']. '/payment/heepay_zfb.php';
+$payment_lang = ROOT_PATH . 'languages/' .$GLOBALS['_CFG']['lang']. '/payment/heepay_jd.php';
 
 if (file_exists($payment_lang))
 {
@@ -23,7 +23,7 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['code']    = basename(__FILE__, '.php');
 
     /* 描述对应的语言项 */
-    $modules[$i]['desc']    = 'heepay_zfb_desc';
+    $modules[$i]['desc']    = 'heepay_jd_desc';
 
     /* 是否支持货到付款 */
     $modules[$i]['is_cod']  = '0';
@@ -52,11 +52,11 @@ if (isset($set_modules) && $set_modules == TRUE)
 /**
  * 类
  */
-class heepay_zfb
+class heepay_jd
 {
     function __construct()
     {
-        $this->heepay_zfb();
+        $this->heepay();
     }
 
     /**
@@ -67,7 +67,7 @@ class heepay_zfb
      *
      * @return void
      */
-    function heepay_zfb()
+    function heepay()
     {
 
     }
@@ -96,7 +96,7 @@ class heepay_zfb
             'agent_id' => intval($payment['agent_id']),
             'agent_bill_id' => $order['order_sn'],
             'agent_bill_time' => date('YmdHis', $order['add_time']),
-            'pay_type' => 22,
+            'pay_type' => 33,
             'pay_amt' => $order['order_amount'],
             'notify_url' => 'http://www.baidu.com',
             'return_url' => 'http://www.souhu.com',
@@ -105,8 +105,8 @@ class heepay_zfb
         $parameter = array(
             'goods_name' => 'null1',
             'goods_note' => 'null2',
-            'goods_num' => '',
-            'remark' => '',
+            'goods_num' => '10',
+            'remark' => 'null4',
         );
 
         $param = '';
@@ -114,22 +114,18 @@ class heepay_zfb
 
         foreach ($signs AS $key => $val)
         {
-            if ($val) {
-                $param .= "$key=" .urlencode($val). "&";
-                $sign  .= "$key=$val&";
-            }
+            $param .= "$key=$val&";
+            $sign  .= "$key=$val&";
         }
         foreach ($parameter AS $key => $val)
         {
-            if ($val) {
-                $param .= "$key=" .urlencode($val). "&";
-            }
+            $param .= "$key=$val&";
         }
 
-        $param = substr($param, 0, -1);
+        $param = strtolower(iconv( "UTF-8", "gb2312//IGNORE" , substr($param, 0, -1)));
         $sign  .= 'key='.$payment['key'];
         
-        $url = 'https://pay.heepay.com/Payment/Index.aspx?'.$param.'&sign='.strtolower(md5($sign));
+        $url = 'https://pay.heepay.com/Payment/Index.aspx?'.$param.'&sign='.strtolower(md5(iconv( "UTF-8", "gb2312//IGNORE" , $sign)));
         $button = '<div style="text-align:center"><input type="button" onclick="window.open(\''.$url.'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
