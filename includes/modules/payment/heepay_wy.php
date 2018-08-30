@@ -97,7 +97,7 @@ class heepay_wy
         $requestTime=date('YmdHis', time());	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
         $version="1.0";	//版本号	商户请求版本号	
         $notifyUrl="http://www.e7chong.com/mall/";	//通知URL	
-        $callBackUrl="http://www.e7chong.com/mall/";	//同步返回URL	本次交易同步返回URL	
+        $callBackUrl=return_url(basename(__FILE__, '.php'));	//同步返回URL	本次交易同步返回URL	
 
         $description="趣讯";	//商品信息	本次交易商品信息	
         $clientIp="127.0.0.1";	//用户ip	发起交易用户的ip	
