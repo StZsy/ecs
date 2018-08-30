@@ -90,11 +90,11 @@ class heepay_wy
 
         $url="https://c.heepay.com/quick/pc/index.do";
         $merchantId=$payment['agent_id'];	//商户号	汇付宝提供给商户的ID
-        $merchantOrderNo=date('YmdHis', $order['add_time']);	//商户交易号	商户内部的交易ID	
+        $merchantOrderNo=$order['order_sn'];	//商户交易号	商户内部的交易ID	
         $merchantUserId=$order['user_id'];	//用户号	商户内部的个人用户ID 商户自定义	
         $productCode="HY_B2CEBANKPC";	//产品编码	用户签约的产品编码: 银联为HY_B2CEBANKPC
         $payAmount=$order['order_amount'];	//交易金额	单位为元，两位小数
-        $requestTime=date('YmdHis', time());	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
+        $requestTime=date('YmdHis', $order['add_time']);	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
         $version="1.0";	//版本号	商户请求版本号	
         $notifyUrl=return_url(basename(__FILE__, '.php'));	//通知URL	
         $callBackUrl=return_url(basename(__FILE__, '.php'));	//同步返回URL	本次交易同步返回URL	
@@ -158,7 +158,6 @@ class heepay_wy
      */
     function respond()
     {
-        order_paid('2018083104042', 2);return true;
         if (!empty($_POST))
         {
             foreach($_POST as $key => $data)
