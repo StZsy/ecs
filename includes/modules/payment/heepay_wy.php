@@ -113,7 +113,10 @@ class heepay_wy
         {
             $clientIp = $_SERVER['REMOTE_ADDR'];
         }
-        $onlineType="simple";
+        // $onlineType="simple";
+        // $bankId="708";
+        // $bankName="银联";
+        $onlineType="hard";
         $bankId="708";
         $bankName="银联";
         $bankCardType="SAVING";//SAVING : 储蓄卡支付CREDIT : 信用卡支付
