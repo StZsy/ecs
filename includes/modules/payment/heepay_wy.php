@@ -96,8 +96,8 @@ class heepay_wy
         $payAmount=$order['order_amount'];	//交易金额	单位为元，两位小数
         $requestTime=date('YmdHis', time());	//请求时间	商户请求接口时间 yyyyMMddhhmmss	
         $version="1.0";	//版本号	商户请求版本号	
-        $notifyUrl="http://";	//通知URL	
-        $callBackUrl="http://";	//同步返回URL	本次交易同步返回URL	
+        $notifyUrl="http://$_SERVER[HTTP_HOST]";	//通知URL	
+        $callBackUrl="http://$_SERVER[HTTP_HOST]";	//同步返回URL	本次交易同步返回URL	
 
         $description="goods_info";	//商品信息	本次交易商品信息	
         $clientIp="192.168.8.103";	//用户ip	发起交易用户的ip	
@@ -132,27 +132,24 @@ class heepay_wy
         $signString = md5($sign_str);
 
 
-        $button = "<form id='frmSubmit' method='post' name='frmSubmit' action=<?php echo $url;?>>
-        <input type='hidden' name='merchantId' value='<?php echo $merchantId;?>' />
-        <input type='hidden' name='merchantOrderNo' value='<?php echo $merchantOrderNo;?>' />
-        <input type='hidden' name='merchantUserId' value='<?php echo $merchantUserId;?>' />
-        <input type='hidden' name='productCode' value='<?php echo $productCode;?>' />
-        <input type='hidden' name='payAmount' value='<?php echo $payAmount;?>' />
-        <input type='hidden' name='requestTime' value='<?php echo $requestTime;?>' />
-        <input type='hidden' name='version' value='<?php echo $version;?>' />
-        <input type='hidden' name='notifyUrl' value='<?php echo $notifyUrl;?>' />
-        <input type='hidden' name='callBackUrl' value='<?php echo $callBackUrl;?>' />
-        <input type='hidden' name='description' value='<?php echo $description;?>' />
-        <input type='hidden' name='clientIp' value='<?php echo $clientIp;?>' />
-        <input type='hidden' name='signString' value='<?php echo $signString;?>' />
-        <input type='hidden' name='onlineType' value='<?php echo $onlineType;?>' />
-        <input type='hidden' name='bankId' value='<?php echo $bankId;?>' />
-        <input type='hidden' name='bankName' value='<?php echo $bankName;?>' />
-        <input type='hidden' name='bankCardType' value='<?php echo $bankCardType;?>' />
-        </form><div style=\"text-align:center\"><input type=\"button\" onclick=\"document.frmSubmit.submit();\" value=\"$GLOBALS[_LANG][pay_button]\" /></div>";
-
-        // $url = 'https://pay.heepay.com/Payment/Index.aspx?'.$param.'&sign='.strtolower(md5($sign));
-        // $button = '<div style="text-align:center"><input type="button" onclick="window.open(\''.$url.'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+        $button = "<form id='frmSubmit' method='post' name='frmSubmit' action=$url  target=\"_bland\">
+        <input type='hidden' name='merchantId' value='$merchantId' />
+        <input type='hidden' name='merchantOrderNo' value='$merchantOrderNo' />
+        <input type='hidden' name='merchantUserId' value='$merchantUserId' />
+        <input type='hidden' name='productCode' value='$productCode' />
+        <input type='hidden' name='payAmount' value='$payAmount' />
+        <input type='hidden' name='requestTime' value='$requestTime' />
+        <input type='hidden' name='version' value='$version' />
+        <input type='hidden' name='notifyUrl' value='$notifyUrl' />
+        <input type='hidden' name='callBackUrl' value='$callBackUrl' />
+        <input type='hidden' name='description' value='$description' />
+        <input type='hidden' name='clientIp' value='$clientIp' />
+        <input type='hidden' name='signString' value='$signString' />
+        <input type='hidden' name='onlineType' value='$onlineType' />
+        <input type='hidden' name='bankId' value='$bankId' />
+        <input type='hidden' name='bankName' value='$bankName' />
+        <input type='hidden' name='bankCardType' value='$bankCardType' />
+        </form><div style=\"text-align:center\"><input type=\"button\" onclick=\"document.frmSubmit.submit();\" value=\"".$GLOBALS["_LANG"]["pay_button"]."\" /></div>";
 
         return $button;
     }
