@@ -87,10 +87,10 @@ class heepay_wy
         {
             $charset = EC_CHARSET;
         }
-var_dump($order);
+        
         $url="https://c.heepay.com/quick/pc/index.do";
         $merchantId=$payment['agent_id'];	//商户号	汇付宝提供给商户的ID
-        $merchantOrderNo=$order['order_sn'];	//商户交易号	商户内部的交易ID	
+        $merchantOrderNo=$order['order_id'];	//商户交易号	商户内部的交易ID	
         $merchantUserId=$order['user_id'];	//用户号	商户内部的个人用户ID 商户自定义	
         $productCode="HY_B2CEBANKPC";	//产品编码	用户签约的产品编码: 银联为HY_B2CEBANKPC
         $payAmount=$order['order_amount'];	//交易金额	单位为元，两位小数
