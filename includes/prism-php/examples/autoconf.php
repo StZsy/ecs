@@ -3,7 +3,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 if($_REQUEST['token']) {
     //2.x 绗?簩姝? Prism鏈嶅姟鍣ㄦ牴鎹畉oken鑾峰彇閰嶇疆鍙傛暟
-    $_REQUEST['token'] = preg_replace("/[^A-z0-9]/",'',$_REQUEST['token');
+    $_REQUEST['token'] = preg_replace("/[^A-z0-9]/",'',$_REQUEST['token']);
     get_args_by_token($_REQUEST['token']);
 }else{
     //1.x 绗?竴姝? 浜哄伐浜や簰杩囩▼

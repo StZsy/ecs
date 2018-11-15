@@ -151,7 +151,7 @@ EOT;
         <input type="hidden" name="mysql_charset" value="'. $mysql_charset .'" />
         <input type="hidden" name="act" value="convert" />
         <input type="hidden" name="table_name" value="'.$tables_keys[0].'" />';
-        showmessage("鏁版嵁搴撳?浠藉畬鎴愶紝".$backup_count." 涓?師鏁版嵁琛ㄥ潎閲嶅懡鍚嶄负浠 _bak 涓哄悗缂€锛?, '?step=start', 'form', $extra );
+        showmessage("鏁版嵁搴撳?浠藉畬鎴愶紝".$backup_count." 涓?師鏁版嵁琛ㄥ潎閲嶅懡鍚嶄负浠 _bak 涓哄悗缂€锛?", '?step=start', 'form', $extra );
     } else {
         convert_table(getgpc('table_name', 'P'));
     }
@@ -360,7 +360,7 @@ function backup_tables($tables) {
     global $convert_tables, $convert_tables_file;
     $suffix = '_bak';
     $backup_count = 0;
-    display('姝ｅ湪杩涜?澶囦唤鏁版嵁琛?);
+    display('姝ｅ湪杩涜?澶囦唤鏁版嵁琛?');
     if (!empty($tables)) {
         foreach($tables as $tablename) {
             $db->query("DROP TABLE IF EXISTS `{$tablename}{$suffix}`;", 'SILENT');
@@ -380,7 +380,7 @@ function convert_table($table) {
     if (empty($table)) {
         showmessage('鏁版嵁琛ㄥ悕涓嶈兘涓虹┖锛岃浆鎹?腑姝?紝濡傞渶閲嶆柊杞?崲璇峰厛杩樺師鏁版嵁搴撳悗鍐嶆?鎵ц?鏈?▼搴忥紒');
     }
-    display('姝ｅ湪杞?崲 '. $table .' 鏁版嵁琛?紝璇峰嬁鍏抽棴鏈?〉闈㈡垨鍒锋柊銆?);
+    display('姝ｅ湪杞?崲 '. $table .' 鏁版嵁琛?紝璇峰嬁鍏抽棴鏈?〉闈㈡垨鍒锋柊銆?');
     global $ecshop_charset, $mysql_charset, $mysql_version;
     global $db, $prefix;
     global $convert_tables, $convert_tables_file, $tables_keys, $rpp;
@@ -455,7 +455,7 @@ function convert_table($table) {
             <input type="hidden" name="start" value="'.$next_start.'" />
             <input type="hidden" name="count" value="'.$count.'" />
             <input type="hidden" name="table_name" value="'.$tables_keys[0].'" />';
-            showmessage("姝ｅ湪杞?崲鏁版嵁琛 $table 鐨勭? $start - ".((($start+$rpp) > $count) ? $count : ($start+$rpp))." 鏉℃暟鎹?, '?step=start', 'form', $extra );
+            showmessage("姝ｅ湪杞?崲鏁版嵁琛 $table 鐨勭? $start - ".((($start+$rpp) > $count) ? $count : ($start+$rpp))." 鏉℃暟鎹?", '?step=start', 'form', $extra );
         }
     }
 }

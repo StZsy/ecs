@@ -138,7 +138,7 @@ $_LANG['ui_ucenter'] = 'UCenter type';
 
 
 /* 鍗囩骇鏂囦欢浣跨敤涓?枃鐨勮?瑷€椤 */
-$_LANG['update_v250']['zh_cn'] = array('甯愭埛鍐插€?, '甯愭埛鎻愭?', '璐?拱鍟嗗搧', '璁㈠崟閫€娆?, 'init' => '鍒濆?鍖?);
-$_LANG['update_v250']['zh_tw'] = array('甯虫埗娌栧€?, '甯虫埗鎻愭?', '璩艰卜鍟嗗搧', '瑷傚柈閫€娆?, 'init' => '鍒濆?鍖?);
+$_LANG['update_v250']['zh_cn'] = array('甯愭埛鍐插€?', '甯愭埛鎻愭?', '璐?拱鍟嗗搧', '璁㈠崟閫€娆?', 'init' => '鍒濆?鍖?');
+$_LANG['update_v250']['zh_tw'] = array('甯虫埗娌栧€?', '甯虫埗鎻愭?', '璩艰卜鍟嗗搧', '瑷傚柈閫€娆?', 'init' => '鍒濆?鍖?');
 $_LANG['update_v250']['en_us'] = array('saving', 'drawing', 'buying', 'refundment',  'init' => 'initialize');
 ?>
